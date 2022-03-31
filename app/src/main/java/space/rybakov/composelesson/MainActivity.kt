@@ -23,11 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import space.rybakov.composelesson.ui.theme.ComposeLessonTheme
 
 
@@ -35,51 +38,41 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Column(
+            Box(
                 modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-            ) {
-                for (i in  1..10) {
-                    listItem("Zac Efron", "Actor $i")
-                }
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center) {
+                circleItem()
             }
         }
     }
 }
 
 @Composable
-private fun listItem(name: String, prof: String){
-    var counter = remember {
+private fun circleItem(){
+    val counter = remember {
         mutableStateOf(0)
     }
-    
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 10.dp, vertical = 6.dp)
-            .clickable {
-                Log.d("MyLog", "Clicked")
-                counter.value++
-            },
-        shape = RoundedCornerShape(15.dp),
-        elevation = 5.dp
-    ){
-        Box( ){
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    painter = painterResource(id = R.drawable.img),
-                    contentDescription = "image",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .padding(5.dp)
-                        .size(64.dp)
-                        .clip(CircleShape)
-                )
-                Column(modifier = Modifier.padding(start = 16.dp)) {
-                    Text(text = "$name ${counter.value}")
-                    Text(text = prof)
-                }
+    val color = remember {
+        mutableStateOf(Color.Blue)
+    }
+    Box(modifier = Modifier
+        .size(100.dp)
+        .background(
+            color = color.value,
+            shape = CircleShape)
+        .clickable {
+            when(++counter.value){
+                10 -> color.value = Color.Red
+                20 -> color.value = Color.Green
             }
-        }
+        },
+        contentAlignment = Alignment.Center
+    ){
+        Text(
+            text = "${counter.value}",
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 20.sp))
     }
 }
