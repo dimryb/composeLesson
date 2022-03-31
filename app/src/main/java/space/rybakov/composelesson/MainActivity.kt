@@ -17,6 +17,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,20 +49,17 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun listItem(name: String, prof: String){
+    var counter = remember {
+        mutableStateOf(0)
+    }
+    
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp, vertical = 6.dp)
-            .pointerInput(Unit){
-                detectHorizontalDragGestures { change, dragAmount ->
-                    Log.d("MyLog", "Drag $dragAmount")
-                }
-                detectTapGestures{ // Не как не работает
-                    Log.d("MyLog", "TapGestures")
-                }
-            }
             .clickable {
                 Log.d("MyLog", "Clicked")
+                counter.value++
             },
         shape = RoundedCornerShape(15.dp),
         elevation = 5.dp
@@ -77,7 +76,7 @@ private fun listItem(name: String, prof: String){
                         .clip(CircleShape)
                 )
                 Column(modifier = Modifier.padding(start = 16.dp)) {
-                    Text(text = name)
+                    Text(text = "$name ${counter.value}")
                     Text(text = prof)
                 }
             }
