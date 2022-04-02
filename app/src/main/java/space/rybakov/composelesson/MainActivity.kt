@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
                         ItemRowModel(R.drawable.image_9, "Алина"),
                         ItemRowModel(R.drawable.image_10, "Обезьян")
                     )
-                ){ _, item ->
+                ) { _, item ->
                     ItemRow(item = item)
                 }
             }

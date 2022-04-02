@@ -24,7 +24,8 @@ fun ItemRow(item: ItemRowModel) {
             .padding(3.dp)
             .background(Color.White)
     ) {
-        Image(painter = painterResource(id = item.imageId),
+        Image(
+            painter = painterResource(id = item.imageId),
             contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier
